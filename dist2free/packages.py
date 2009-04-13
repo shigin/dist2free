@@ -67,7 +67,6 @@ def get_use_deps(deps):
     preds = []
     for dep in deps:
         vp = VersionPredicate(dep)
-        print vp.name
         if vp.name not in USE_LIST:
             continue
         if len(vp.pred) > 1:

@@ -60,6 +60,8 @@ class build_pkg(Command):
          "file to place in ${PREFIX}/etc"),
         ('extra-modules=', None,
          "extra modules in form ('path/module', ${MAKEFILE_VAR}/path)"),
+        ('brief-prefix=', None,
+         "prefix for brief description of the package"),
     ]
 
     def get_deps(self):
@@ -149,7 +151,6 @@ class build_pkg(Command):
         scripts = []
         for script in self.rc_scripts:
             # scripts/rc1.sh => rc1
-            print script
             scripts.append(script.split('/')[-1].split('.')[0])
 
         return " ".join(scripts)
@@ -190,7 +191,6 @@ class build_pkg(Command):
 
     def finalize_options (self):
         if self.python_min_version:
-            print self.python_min_version
             assert re.match(r'[0-9][.][0-9]', str(self.python_min_version))
         if self.pkg_install:
             assert os.path.isfile(self.pkg_install)
@@ -267,8 +267,6 @@ rm -rf $TMP
             cmd_obj.ensure_finalized()
             cmd_obj.run()
             self.have_run['build'] = 1
-
-#        print cmd_obj.
 
     def add_dirrm(self, fname):
 #        cmd_obj = self.get_command_obj('build_py')
